@@ -18,15 +18,17 @@ func main() {
 			http.Error(w, "Missing 'url' query parameter", http.StatusBadRequest)
 			return
 		}
+		var sizeInt int
+		var err error
 		size := r.URL.Query().Get("size")
 		if size == "" {
-			http.Error(w, "Missing 'size' query parameter", http.StatusBadRequest)
-			return
-		}
-		sizeInt, err := strconv.Atoi(size)
-		if err != nil {
-			http.Error(w, "Invalid 'size' query parameter", http.StatusBadRequest)
-			return
+			sizeInt = 256
+		} else {
+			sizeInt, err = strconv.Atoi(size)
+			if err != nil {
+				http.Error(w, "Invalid 'size' query parameter", http.StatusBadRequest)
+				return
+			}
 		}
 
 		// Generate the QR code
