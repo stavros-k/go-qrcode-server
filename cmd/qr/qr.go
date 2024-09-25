@@ -44,6 +44,10 @@ func main() {
 		}
 	})
 
+	http.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
+	})
+
 	// Start the server
 	port := ":8080"
 	fmt.Printf("Server listening on port %s\n", port)
